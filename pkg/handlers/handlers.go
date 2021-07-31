@@ -1,8 +1,9 @@
 package handlers
 
 import (
-	"github.com/ajrmzcs/bookings/pkg/config"
-	"github.com/ajrmzcs/bookings/pkg/render"
+	"bookings/pkg/config"
+	"bookings/pkg/models"
+	"bookings/pkg/render"
 	"net/http"
 )
 
@@ -28,10 +29,24 @@ func NewHandlers(r *Repository) {
 
 // Home is the handler for the home page
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "home.page.tmpl")
+	remoteIP := r.RemoteAddr
+	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
+
+
+	render.RenderTemplate(w, "home.page.tmpl", &models.TemplateData{})
 }
 
 // About is the handler for the about page
 func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "about.page.tmpl")
+	// perform some action
+	stringMap := make(map[string]string)
+	stringMap["test"] = "Hello, Again"
+
+	remoteIP := m.App.Session.GetString(r.Context(), "remote_ip")
+	stringMap["remote_ip"] = remoteIP
+
+	// send data to the template
+	render.RenderTemplate(w, "about.page.tmpl", &models.TemplateData{
+		StringMap: stringMap,
+	})
 }
