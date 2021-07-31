@@ -1,9 +1,9 @@
 package render
 
 import (
-	"github.com/ajrmzcs/bookings/pkg/config"
 	"bytes"
 	"fmt"
+	"github.com/ajrmzcs/bookings/pkg/config"
 	"html/template"
 	"log"
 	"net/http"
