@@ -1,1 +1,4 @@
 .idea
+.DS_Store
+html-source/static/.DS_Store
+static/images/.DS_Store
